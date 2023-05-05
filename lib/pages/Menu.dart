@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Menu extends StatelessWidget {
-  //const Menu({Key? key}) : super(key: key);
+class Menu extends StatefulWidget {
+  const Menu({Key? key}) : super(key: key);
 
+  @override
+  State<Menu> createState() => _MenuState();
+}
+
+class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,11 +15,6 @@ class Menu extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.grey[850],
         elevation: 0.0,
-        /*child: IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.mail),
-            color: Colors.amber,
-          )*/
       ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(30.0, 30.0, 30.0, 0.0),
