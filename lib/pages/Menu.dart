@@ -71,7 +71,7 @@ class Menu extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: Text('click'),
-        backgroundColor: Colors.red[600],
+        backgroundColor: Colors.pink[600],
       ),
     );
   }
