@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:psir_app_farmbot/mqtt_commands.dart';
 
 class Connexion extends StatefulWidget {
   const Connexion({Key? key}) : super(key: key);
@@ -8,6 +9,13 @@ class Connexion extends StatefulWidget {
 }
 
 class _ConnexionState extends State<Connexion> {
+  late MqttCommands mqttCommands;
+  bool _obscureText = true;
+  @override
+  void initState() {
+    super.initState();
+    mqttCommands = MqttCommands(context);
+  }
   String mail = "";
   String mdp = "";
 
@@ -34,7 +42,7 @@ class _ConnexionState extends State<Connexion> {
               padding: EdgeInsets.all(20.0),
               decoration: BoxDecoration(
                 color: Colors.grey[600],
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                borderRadius: BorderRadius.all(Radius.circular(20)),
               ),
               child: Column(
                 children: <Widget>[
@@ -55,7 +63,7 @@ class _ConnexionState extends State<Connexion> {
 
                       ),
                     ),
-                    onSubmitted: (champ1) => setState(() {
+                    onChanged: (champ1) => setState(() {
                       mail = champ1;
                     }),
                   ),
@@ -68,15 +76,27 @@ class _ConnexionState extends State<Connexion> {
                       fontFamily: 'Dongle',
                     ),
                   ),
-                  TextField(
+                  TextFormField(
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20.0),
                       ),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _obscureText = !_obscureText;
+                          });
+                        },
+                        icon: Icon(
+                          _obscureText ? Icons.visibility : Icons.visibility_off,
+                          color: Colors.grey[600],
+                        ),
+                      ),
                     ),
-                    onSubmitted: (champ2) => setState(() {
+                    obscureText: _obscureText,
+                    onChanged: (champ2) => setState(() {
                       mdp = champ2;
                     }),
                   ),
@@ -87,7 +107,7 @@ class _ConnexionState extends State<Connexion> {
             SizedBox(height: 20.0), //Espace de 20 pixels
             ElevatedButton(
               onPressed: () {
-                //TODO Requette
+                mqttCommands.connect(mail,mdp);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
