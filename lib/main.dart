@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:psir_app_farmbot/pages/Connexion.dart';
+import 'package:psir_app_farmbot/pages/Deplacement.dart';
 import 'package:psir_app_farmbot/pages/Donnees.dart';
 import 'package:psir_app_farmbot/pages/LoadScreen.dart';
 import 'package:psir_app_farmbot/pages/Menu.dart';
@@ -21,6 +22,7 @@ void main() => runApp(MaterialApp(
     '/menu': (context) => Menu(),
     '/donnees': (context) => Donnees(),
     '/faire': (context) => Faire(),
+    '/deplacement': (context) => Deplacement(),
   },
 ));
 
