@@ -12,9 +12,8 @@ import 'package:flutter/material.dart';
 
 // Création de la classe principale
 class MqttCommands {
-  BuildContext context;
-  MqttCommands(this.context);
-  late MqttClient client;
+  late MqttServerClient client;
+  late BuildContext context;
   String status = '';
   String username = '';
 
@@ -28,9 +27,9 @@ class MqttCommands {
     final body = json.encode({'user': {'email': email, 'password': password}});
     final response = await http.post(url, headers: headers, body: body);
     if (response.statusCode != 200) {
-      status='Failed Login or Bad Connection';
+      status="Mauvais mot de passe ?";
       showSnackbar();
-      throw Exception('Failed to get token');
+      throw Exception("Impossible d'avoir le token");
     }
     final decoded = json.decode(response.body);
     final token = decoded['token'];
@@ -44,17 +43,17 @@ class MqttCommands {
 // il faut réunir les informations suivantes:
 // - le port de connection
 // - les topics ciblé dont celui qui revoit les mqtt rpc ack
-  void connect(String email, String pass) async {
+  void connect(String email, String pass, BuildContext context1) async {
+    context=context1;
     // on commence par faire une requete REST API pour récuperer le token
     final token = await getToken(email,pass);
     username = token['bot']; // on set la variable global
     final String mqtt = token['mqtt'];  // on trie l'url MQTT
     final String password = token['encoded']; // on trie le mot de passe
-
-    final client = MqttServerClient(mqtt, ''); // on réutilise l'url du token
+    client = MqttServerClient(mqtt, ''); // on réutilise l'url du token
     client.logging(on: false);  // utile pour avoir plus de logins
     client.port = 8883;         // port à spécifier (1883=mqtt, 8883=mqtts)
-    client.secure = true;       // active le mode sécurisé
+    client.secure = true;        //active le mode sécurisé
     client.onConnected = () { // boucle triggered lors de la confirmation de connexion
       print('Connecté');
       status = 'Connecté';
@@ -87,16 +86,16 @@ class MqttCommands {
   }
   void showSnackbar() {
     if (status == 'Déconnecté') {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(status),
-        action: SnackBarAction(
-          label: 'Reconnecter',
-          onPressed: () {Navigator.pushNamed(context, '/connexion');},
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(status),
+          action: SnackBarAction(
+            label: 'Reconnecter',
+            onPressed: () {Navigator.pushNamed(context, '/connexion');},
+          ),
         ),
-      ),
-    );}
-    else{
+      );}
+    else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(status),
@@ -105,6 +104,7 @@ class MqttCommands {
       );
     }
   }
+
 // Rédaction type d'une fonction pour envoyer des commandes:
 //  void sendHomeRequest() {
 //    final rpcRequest = """{

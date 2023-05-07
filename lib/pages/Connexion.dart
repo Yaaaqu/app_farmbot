@@ -2,20 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:psir_app_farmbot/mqtt_commands.dart';
 
 class Connexion extends StatefulWidget {
-  const Connexion({Key? key}) : super(key: key);
+  final MqttCommands mqttCommands;
+  const Connexion({Key? key, required this.mqttCommands}) : super(key: key);
 
   @override
   State<Connexion> createState() => _ConnexionState();
 }
 
 class _ConnexionState extends State<Connexion> {
-  late MqttCommands mqttCommands;
   bool _obscureText = true;
-  @override
-  void initState() {
-    super.initState();
-    mqttCommands = MqttCommands(context);
-  }
   String mail = "";
   String mdp = "";
 
@@ -106,9 +101,9 @@ class _ConnexionState extends State<Connexion> {
             ),
             SizedBox(height: 20.0), //Espace de 20 pixels
             ElevatedButton(
-              onPressed: () {
-                mqttCommands.connect(mail,mdp);
-              },
+              onPressed: () {widget.mqttCommands.connect(mail, mdp, context);
+
+                },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
                 fixedSize: Size(MediaQuery.of(context).size.width * 0.5, 70.0),
