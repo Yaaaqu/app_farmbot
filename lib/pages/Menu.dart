@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:psir_app_farmbot/mqtt_commands.dart';
 class Menu extends StatefulWidget {
   const Menu({Key? key}) : super(key: key);
 
@@ -8,6 +8,12 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
+  late MqttCommands mqttCommands;
+  @override
+  void initState() {
+    super.initState();
+    mqttCommands = MqttCommands(context);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,10 +75,11 @@ class _MenuState extends State<Menu> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Text('click'),
+        onPressed: () {mqttCommands.soilHeight();},
+        child: Text('Connect'),
         backgroundColor: Colors.red[600],
       ),
+
     );
   }
 }
