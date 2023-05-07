@@ -1,7 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:psir_app_farmbot/mqtt_commands.dart';
 import 'package:psir_app_farmbot/pages/Connexion.dart';
+import 'package:psir_app_farmbot/pages/Deplacement.dart';
 import 'package:psir_app_farmbot/pages/Donnees.dart';
 import 'package:psir_app_farmbot/pages/LoadScreen.dart';
 import 'package:psir_app_farmbot/pages/Menu.dart';
@@ -13,16 +15,20 @@ import 'package:psir_app_farmbot/pages/Faire.dart';
   runApp(MaterialApp(
     home: Home(),
   ));*/
-void main() => runApp(MaterialApp(
-  initialRoute: '/connexion',
-  routes: {
-    '/': (context) => Loadscreen(),
-    '/connexion': (context) => Connexion(),
-    '/menu': (context) => Menu(),
-    '/donnees': (context) => Donnees(),
-    '/faire': (context) => Faire(),
-  },
-));
+void main() {
+  final mqttCommands = MqttCommands();
+  runApp(MaterialApp(
+
+    initialRoute: '/connexion',
+    routes: {
+      '/': (context) => Loadscreen(),
+      '/connexion': (context) => Connexion(mqttCommands: mqttCommands),
+      '/menu': (context) => Menu(mqttCommands: mqttCommands),
+      '/donnees': (context) => Donnees(),
+      '/faire': (context) => Faire(),
+    },
+  ));
+}
 
 class Home extends StatelessWidget {
   //const Home({Key? key}) : super(key: key);

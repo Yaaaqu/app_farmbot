@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:psir_app_farmbot/mqtt_commands.dart';
+
+
 class Menu extends StatefulWidget {
-  const Menu({Key? key}) : super(key: key);
+  final MqttCommands mqttCommands;
+  const Menu({Key? key, required this.mqttCommands}) : super(key: key);
 
   @override
   State<Menu> createState() => _MenuState();
 }
 
 class _MenuState extends State<Menu> {
-  late MqttCommands mqttCommands;
-  @override
-  void initState() {
-    super.initState();
-    mqttCommands = MqttCommands(context);
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +72,7 @@ class _MenuState extends State<Menu> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {mqttCommands.soilHeight();},
+        onPressed: () {widget.mqttCommands.sendHomeRequest();},
         child: Text('Connect'),
         backgroundColor: Colors.red[600],
       ),
