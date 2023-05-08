@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
+
 import '../mqtt_commands.dart';
 
 class Deplacement extends StatefulWidget {
   final MqttCommands mqttCommands;
   const Deplacement({Key? key, required this.mqttCommands}) : super(key: key);
+
 
   @override
   State<Deplacement> createState() => _DeplacementState();
@@ -65,8 +67,10 @@ class _DeplacementState extends State<Deplacement> {
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                   ),
+
                   onChanged: (champX) {
                     _x = champX!.isEmpty ? 0 : int.parse(champX); /////////////////////////////A vérifier
+
                   },
                 ),
                 Text(
@@ -86,8 +90,10 @@ class _DeplacementState extends State<Deplacement> {
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                   ),
+
                   onChanged: (champY) {
                     _y = champY!.isEmpty ? 0 : int.parse(champY); /////////////////////////////A vérifier
+
                   },
                 ),
               ],
@@ -109,15 +115,19 @@ class _DeplacementState extends State<Deplacement> {
                   borderRadius: BorderRadius.circular(20.0),
                 ),
               ),
+
               onChanged: (champZ) {
                 _z = champZ!.isEmpty ? 0 : int.parse(champZ); /////////////////////////////A vérifier
+
               },
             ),
             SizedBox(height: 20.0), //Espace de 20 pixels
 
             ElevatedButton(
               onPressed: () {
+
                 widget.mqttCommands.sendMoveRequest(_x, _y, _z);
+
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,

@@ -40,7 +40,9 @@ class _FaireState extends State<Faire> {
               children: <Widget>[
                 ElevatedButton(
                   onPressed: () {
+
                     widget.mqttCommands.waterAll();
+
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.grey[600],
@@ -63,7 +65,9 @@ class _FaireState extends State<Faire> {
                 ),
                 ElevatedButton(
                   onPressed: () {
+
                     widget.mqttCommands.dispenseWater();
+
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.grey[600],
@@ -92,7 +96,9 @@ class _FaireState extends State<Faire> {
               children: <Widget>[
                 ElevatedButton(
                   onPressed: () {
+
                     widget.mqttCommands.sendHomeRequest();
+
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.grey[600],
@@ -143,7 +149,9 @@ class _FaireState extends State<Faire> {
               children: <Widget>[
                 ElevatedButton(
                   onPressed: () {
+
                     widget.mqttCommands.mowAllWeeds();
+
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.grey[600],
@@ -166,7 +174,9 @@ class _FaireState extends State<Faire> {
                 ),
                 ElevatedButton(
                   onPressed: () {
+
                     widget.mqttCommands.takePhotoRequest();
+
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.grey[600],
