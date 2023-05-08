@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:psir_app_farmbot/mqtt_commands.dart';
 
-class Faire extends StatelessWidget {
+class Faire extends StatefulWidget {
+  final MqttCommands mqttCommands;
+  const Faire({Key? key, required this.mqttCommands}) : super(key: key);
+
+  @override
+  State<Faire> createState() => _FaireState();
+}
+
+class _FaireState extends State<Faire> {
   //const Faire({Key? key}) : super(key: key);
 
   @override
@@ -31,7 +40,7 @@ class Faire extends StatelessWidget {
               children: <Widget>[
                 ElevatedButton(
                   onPressed: () {
-                    //TODO redirection
+                    widget.mqttCommands.waterAll();
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.grey[600],
@@ -54,7 +63,7 @@ class Faire extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    //TODO redirection
+                    widget.mqttCommands.dispenseWater();
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.grey[600],
@@ -83,7 +92,7 @@ class Faire extends StatelessWidget {
               children: <Widget>[
                 ElevatedButton(
                   onPressed: () {
-                    //TODO redirection
+                    widget.mqttCommands.sendHomeRequest();
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.grey[600],
@@ -134,7 +143,7 @@ class Faire extends StatelessWidget {
               children: <Widget>[
                 ElevatedButton(
                   onPressed: () {
-                    //TODO redirection
+                    widget.mqttCommands.mowAllWeeds();
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.grey[600],
@@ -157,7 +166,7 @@ class Faire extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    //TODO redirection
+                    widget.mqttCommands.takePhotoRequest();
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.grey[600],

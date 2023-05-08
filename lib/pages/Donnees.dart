@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
 
-class Donnees extends StatelessWidget {
+import '../mqtt_commands.dart';
+
+class Donnees extends StatefulWidget {
+  final MqttCommands mqttCommands;
+  const Donnees({Key? key, required this.mqttCommands}) : super(key: key);
+
+  @override
+  State<Donnees> createState() => _DonneesState();
+}
+class _DonneesState extends State<Donnees> {
   //const Donnees({Key? key}) : super(key: key);
 
   @override

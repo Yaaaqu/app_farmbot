@@ -197,11 +197,19 @@ class MqttCommands {
 }
       ]
     }""";
+    if (x<0 || x>2000 || y<0 || y > 1200 || z>0){
+      status="Wrong Coordinates:\n"
+          "x must be between 0 & 2000\n"
+          "y must be between 0 & 1600\n"
+          "z must be between 0 & -300\n";
+      showSnackbar();
+    } else {
     final message = MqttClientPayloadBuilder()
         .addString(rpcRequest)
         .payload;
     client.publishMessage(
         'bot/$username/from_clients', MqttQos.atLeastOnce, message!);
+    }
   }
 
 // it will dispense some water for 2 seconds at the position of the farmbot
@@ -349,6 +357,24 @@ class MqttCommands {
   ]
 }
  ]
+    }""";
+    final message = MqttClientPayloadBuilder()
+        .addString(rpcRequest)
+        .payload;
+    client.publishMessage(
+        'bot/$username/from_clients', MqttQos.atLeastOnce, message!);
+  }
+
+  void reboot() {
+    final rpcRequest = """{
+      "kind": "rpc_request",
+      "args": { "label": "Soil_Height" },
+      "body": [{
+  "kind": "reboot",
+  "args": {
+  "package": "farmbot_os"
+  }
+  }]
     }""";
     final message = MqttClientPayloadBuilder()
         .addString(rpcRequest)
