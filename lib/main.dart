@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:psir_app_farmbot/mqtt_commands.dart';
 import 'package:psir_app_farmbot/pages/Connexion.dart';
@@ -24,8 +22,9 @@ void main() {
       '/': (context) => Loadscreen(),
       '/connexion': (context) => Connexion(mqttCommands: mqttCommands),
       '/menu': (context) => Menu(mqttCommands: mqttCommands),
-      '/donnees': (context) => Donnees(),
-      '/faire': (context) => Faire(),
+      '/donnees': (context) => Donnees(mqttCommands: mqttCommands),
+      '/faire': (context) => Faire(mqttCommands: mqttCommands),
+      '/deplacement': (context) => Deplacement(mqttCommands: mqttCommands),
     },
   ));
 }

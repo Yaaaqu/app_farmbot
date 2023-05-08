@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../mqtt_commands.dart';
+
 class Deplacement extends StatefulWidget {
-  const Deplacement({Key? key}) : super(key: key);
+  final MqttCommands mqttCommands;
+  const Deplacement({Key? key, required this.mqttCommands}) : super(key: key);
 
   @override
   State<Deplacement> createState() => _DeplacementState();
@@ -62,8 +65,8 @@ class _DeplacementState extends State<Deplacement> {
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                   ),
-                  onSaved: (champX) {
-                    _x = int.parse(champX!); /////////////////////////////A vérifier
+                  onChanged: (champX) {
+                    _x = champX!.isEmpty ? 0 : int.parse(champX); /////////////////////////////A vérifier
                   },
                 ),
                 Text(
@@ -83,8 +86,8 @@ class _DeplacementState extends State<Deplacement> {
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                   ),
-                  onSaved: (champY) {
-                    _y = int.parse(champY!); /////////////////////////////A vérifier
+                  onChanged: (champY) {
+                    _y = champY!.isEmpty ? 0 : int.parse(champY); /////////////////////////////A vérifier
                   },
                 ),
               ],
@@ -106,15 +109,15 @@ class _DeplacementState extends State<Deplacement> {
                   borderRadius: BorderRadius.circular(20.0),
                 ),
               ),
-              onSaved: (champZ) {
-                _z = int.parse(champZ!); /////////////////////////////A vérifier
+              onChanged: (champZ) {
+                _z = champZ!.isEmpty ? 0 : int.parse(champZ); /////////////////////////////A vérifier
               },
             ),
             SizedBox(height: 20.0), //Espace de 20 pixels
 
             ElevatedButton(
               onPressed: () {
-                //TODO Requette
+                widget.mqttCommands.sendMoveRequest(_x, _y, _z);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,

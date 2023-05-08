@@ -72,8 +72,8 @@ class _MenuState extends State<Menu> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {widget.mqttCommands.sendHomeRequest();},
-        child: Text('Connect'),
+        onPressed: () {widget.mqttCommands.reboot();},
+        child: Text('Reboot'),
         backgroundColor: Colors.red[600],
       ),
 
