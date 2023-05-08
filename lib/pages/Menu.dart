@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:psir_app_farmbot/mqtt_commands.dart';
+
 
 class Menu extends StatefulWidget {
-  const Menu({Key? key}) : super(key: key);
+  final MqttCommands mqttCommands;
+  const Menu({Key? key, required this.mqttCommands}) : super(key: key);
 
   @override
   State<Menu> createState() => _MenuState();
@@ -69,10 +72,11 @@ class _MenuState extends State<Menu> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Text('click'),
+        onPressed: () {widget.mqttCommands.reboot();},
+        child: Text('Reboot'),
         backgroundColor: Colors.red[600],
       ),
+
     );
   }
 }
