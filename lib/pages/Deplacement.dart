@@ -92,34 +92,34 @@ class _DeplacementState extends State<Deplacement> {
                   ),
 
                   onChanged: (champY) {
-                    _y = champY!.isEmpty ? 0 : int.parse(champY); /////////////////////////////A vérifier
+                    _y = champY!.isEmpty ? 0 : int.parse(champY);
+
+                  },
+                ),
+                Text(
+                  'Valeur de Z',
+                  style: TextStyle(
+                    fontSize: 45.0,
+                    color: Colors.white,
+                    fontFamily: 'Dongle',
+                  ),
+                ),
+                TextFormField(
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                  ),
+
+                  onChanged: (champZ) {
+                    _z = champZ!.isEmpty ? 0 : int.parse(champZ);
 
                   },
                 ),
               ],
-            ),
-            Text(
-              'Valeur de Z',
-              style: TextStyle(
-                fontSize: 45.0,
-                color: Colors.white,
-                fontFamily: 'Dongle',
-              ),
-            ),
-            TextFormField(
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-              ),
-
-              onChanged: (champZ) {
-                _z = champZ!.isEmpty ? 0 : int.parse(champZ); /////////////////////////////A vérifier
-
-              },
             ),
             SizedBox(height: 20.0), //Espace de 20 pixels
 
