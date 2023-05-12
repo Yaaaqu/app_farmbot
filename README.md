@@ -45,7 +45,7 @@ void sendHomeRequest() {
       .payload;
 
   client.publishMessage(                      // Spécifie le topic à publier
-      'bot/-----------------------/from_clients', MqttQos.atLeastOnce, message!);
+      'bot/$username/from_clients', MqttQos.atLeastOnce, message!);
 }
 ```
 Veuillez vous référer à la documentation de Farmbot pour la rédaction des scripts celery à l'adresse suivante : https://developer.farm.bot/v15/docs/celery-script.html. Pour plus d'informations sur les topics MQTT, consultez https://developer.farm.bot/v15/docs/message-broker/sending-commands#step-3-subscribing-to-topics.
