@@ -1,0 +1,37 @@
+name: 'Flutter: Create Release'
+
+on:
+  workflow_run:
+    workflows: ['Flutter: build APK']
+    types:
+      - completed
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    needs: build
+    name: Create Release
+    steps:
+      - name: Download APK from build
+        uses: actions/download-artifact@v1
+        with:
+          name: release-apk
+          path: apk
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+        with:
+          tag_name: ${{ github.event.workflow_run.head_branch }}
+          release_name: Release ${{ github.event.workflow_run.head_branch }} 
+      - name: Upload Release APK
+        id: upload_release_asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: apk/app-release.apk
+          asset_name: MensaApp.apk
+          asset_content_type: application/vnd.android.package-archive
