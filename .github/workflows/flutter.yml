@@ -21,7 +21,6 @@ jobs:
           flutter-version: '3.7.7'
       - run: flutter pub get
       - run: flutter build apk
-      - run: flutter build appbundle
       - uses: actions/upload-artifact@v3.1.2
         with:
           name: apk-release
