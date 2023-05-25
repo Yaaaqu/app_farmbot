@@ -268,25 +268,10 @@ class MqttCommands {
       "kind": "rpc_request",
       "args": { "label": "Water all by phone app" },
       "body": [{
-  "kind": "execute",
+  "kind": "lua",
   "args": {
-    "sequence_id": 96172
-  },
-  "body": [
-    {
-      "kind": "parameter_application",
-      "args": {
-        "label": "parent",
-        "data_value": {
-          "kind": "point_group",
-          "args": {
-            "point_group_id": 48895
-          }
-        }
-      }
-    }
-  ],
-  "comment": "Water all plants"
+    "lua": "local watering_time = variable(\"Watering Time (Seconds)\")\nstart_time = os.time() * 1000\n\nlocal points = api({method = \"GET\", url = \"/api/points\"})\n\nlocal plants = {}\n\nfor k, v in pairs(points) do\n    if v.pointer_type == \"Plant\" then\n        table.insert(plants, {name = v.name, x = v.x, y = v.y})\n    end\nend\n\ntable.sort(plants, function(l, r)\n    -- \"close enough\" approximation.\n    if math.abs(l.x - r.x) < 150 then\n        return l.y < r.y\n    else\n        return l.x < r.x\n    end\nend)\n\ncount = 0\ntotal = #plants\njob = \"Watering all \" .. total .. \" plants\"\n\nsend_message(\n    \"info\",\n    \"Watering all \" .. total .. \" plants for \" .. watering_time .. \" seconds each\",\n    \"toast\")\n\nfor k, v in pairs(plants) do\n    coordinates = \"(\" .. v.x .. \", \" .. v.y .. \")\"\n    set_job_progress(job, {\n        percent = 100 * (count) / total,\n        status = \"Moving to \" .. (v.name or \"plant\") .. \" at \" .. coordinates,\n        time = start_time\n    })\n    move_absolute(v.x, v.y, 0)\n    set_job_progress(job, {\n        percent = 100 * (count + 0.5) / total,\n        status = \"Watering \" .. (v.name or \"plant\") .. \" for \" .. watering_time .. \" seconds\",\n        time = start_time\n    })\n    write_pin(8, \"digital\", 1)\n    wait(watering_time * 1000)\n    write_pin(8, \"digital\", 0)\n    count = count + 1\nend\n\nset_job_progress(job, {\n    percent = 100,\n    status = \"Complete\",\n    time = start_time\n})"
+  }
 }
       ]
     }""";
