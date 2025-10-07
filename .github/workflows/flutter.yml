@@ -1,4 +1,6 @@
 name: 'Flutter: build APK'
+permissions:
+  contents: read
 
 on:
   push:
@@ -27,6 +29,8 @@ jobs:
           path: build/app/outputs/apk/release/app-release.apk
   release:
     name: Release APK
+    permissions:
+      contents: write
     needs: build
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
