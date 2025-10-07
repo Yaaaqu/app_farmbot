@@ -50,14 +50,14 @@ jobs:
         mkdir -p "$HOME/android-sdk/cmdline-tools"
         cd "$HOME/android-sdk/cmdline-tools"
     
-        # Téléchargement et installation des tools
+        # Télécharge et décompresse dans latest/
         wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdtools.zip
         unzip -q cmdtools.zip -d latest
     
-        # Installation du SDK minimal requis
-        yes | $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager --sdk_root=$HOME/android-sdk "platforms;android-34" "build-tools;34.0.0" "platform-tools"
+        # Le binaire sdkmanager est en fait un niveau plus bas
+        yes | $HOME/android-sdk/cmdline-tools/latest/cmdline-tools/bin/sdkmanager --sdk_root=$HOME/android-sdk "platforms;android-34" "build-tools;34.0.0" "platform-tools"
     
-        # Détermine le bon dossier Android (racine ou sous-dossier)
+        # Création du fichier local.properties (chemin auto-détecté)
         if [ -d "./android" ]; then
           target_dir="./android"
         elif [ -d "./app_farmbot/android" ]; then
@@ -69,6 +69,7 @@ jobs:
     
         echo "sdk.dir=$HOME/android-sdk" > "$target_dir/local.properties"
         echo "[INFO] Created local.properties at $target_dir/local.properties"
+
 
 
 
