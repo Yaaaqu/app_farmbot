@@ -41,7 +41,7 @@ jobs:
       with:
         distribution: temurin
         java-version: 17
-
+        
     - name: Set up Android SDK
       if: matrix.language == 'java-kotlin'
       run: |
@@ -50,13 +50,14 @@ jobs:
         mkdir -p "$HOME/android-sdk"
         cd "$HOME/android-sdk"
         wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdtools.zip
-        unzip cmdtools.zip -d cmdline-tools
+        unzip cmdtools.zip
         mkdir -p cmdline-tools/latest
-        mv cmdline-tools/* cmdline-tools/latest/
+        mv cmdline-tools/* cmdline-tools/latest/ || true
         yes | $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager --sdk_root=$HOME/android-sdk "platforms;android-34" "build-tools;34.0.0" "platform-tools"
-
-        # Gradle a besoin de ce fichier
+    
+        # Crée le fichier local.properties attendu par Gradle
         echo "sdk.dir=$HOME/android-sdk" > ./android/local.properties
+
 
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
