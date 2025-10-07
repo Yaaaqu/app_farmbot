@@ -64,3 +64,20 @@ jobs:
         uses: github/codeql-action/analyze@v3
         with:
           category: "/language:${{ matrix.language }}"
+                # Analyse Flutter/Dart complémentaire
+      - name: Static analysis (flutter analyze)
+        run: |
+          flutter analyze --no-fatal-infos --no-fatal-warnings --write=analyze-output.txt || true
+          flutter analyze --format=machine | tee flutter-sarif.txt || true
+
+      - name: Convert flutter analyze to SARIF
+        run: |
+          pip install sarif-tools
+          sarif convert flutter-sarif.txt --output dart-analyze.sarif --tool flutter-analyzer
+          echo "Dart SARIF generated"
+
+      - name: Upload Dart SARIF results
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: dart-analyze.sarif
+
