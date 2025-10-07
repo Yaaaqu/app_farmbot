@@ -47,16 +47,29 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y wget unzip
-        mkdir -p "$HOME/android-sdk"
-        cd "$HOME/android-sdk"
+        mkdir -p "$HOME/android-sdk/cmdline-tools"
+        cd "$HOME/android-sdk/cmdline-tools"
+    
+        # Téléchargement et installation des tools
         wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdtools.zip
-        unzip cmdtools.zip
-        mkdir -p cmdline-tools/latest
-        mv cmdline-tools/* cmdline-tools/latest/ || true
+        unzip -q cmdtools.zip -d latest
+    
+        # Installation du SDK minimal requis
         yes | $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager --sdk_root=$HOME/android-sdk "platforms;android-34" "build-tools;34.0.0" "platform-tools"
     
-        # Crée le fichier local.properties attendu par Gradle
-        echo "sdk.dir=$HOME/android-sdk" > ./android/local.properties
+        # Détermine le bon dossier Android (racine ou sous-dossier)
+        if [ -d "./android" ]; then
+          target_dir="./android"
+        elif [ -d "./app_farmbot/android" ]; then
+          target_dir="./app_farmbot/android"
+        else
+          mkdir -p ./android
+          target_dir="./android"
+        fi
+    
+        echo "sdk.dir=$HOME/android-sdk" > "$target_dir/local.properties"
+        echo "[INFO] Created local.properties at $target_dir/local.properties"
+
 
 
     - name: Initialize CodeQL
