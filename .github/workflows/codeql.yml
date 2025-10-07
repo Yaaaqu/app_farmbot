@@ -83,8 +83,22 @@ jobs:
     - if: matrix.language == 'java-kotlin'
       name: Build Android app
       run: |
-        chmod +x ./gradlew || true
+        # Cherche automatiquement où se trouve le gradlew
+        if [ -f "./gradlew" ]; then
+          cd .
+        elif [ -f "./app_farmbot/gradlew" ]; then
+          cd app_farmbot
+        elif [ -f "./android/gradlew" ]; then
+          cd android
+        else
+          echo "❌ gradlew introuvable dans le repo"
+          find . -maxdepth 3 -type f -name gradlew
+          exit 1
+        fi
+    
+        chmod +x ./gradlew
         ./gradlew clean assembleDebug -x lint -x test
+
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
