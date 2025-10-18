@@ -41,7 +41,7 @@ jobs:
 
       # 🪶 Installation de Flutter
       - name: Set up Flutter
-        uses: subosito/flutter-action@v2.12.0
+        uses: subosito/flutter-action@v2.21.0
         with:
           flutter-version: '3.7.7'
 
