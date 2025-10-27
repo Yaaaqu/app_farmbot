@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download APK from build
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: apk-release  
       - name: Create Release
